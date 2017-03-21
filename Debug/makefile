@@ -8,7 +8,7 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./main.obj" \
+"./src/main.obj" \
 "../DM3730.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -21,7 +21,9 @@ RMDIR := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir_vars.mk
+-include src/subdir_vars.mk
 -include subdir_rules.mk
+-include src/subdir_rules.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -118,41 +120,41 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-DM3730_3.out \
+BlinkLED.out \
 
 EXE_OUTPUTS__QUOTED += \
-"DM3730_3.out" \
+"BlinkLED.out" \
 
 BIN_OUTPUTS += \
-DM3730_3.hex \
+BlinkLED.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"DM3730_3.hex" \
+"BlinkLED.hex" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "DM3730_3.out"
+	@$(MAKE) --no-print-directory -Onone "BlinkLED.out"
 
 # Tool invocations
-DM3730_3.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+BlinkLED.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: ARM Linker'
-	"/home/mod/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/bin/armcl" -mv7A8 --code_state=32 -me --define=dm3730 -g --diag_warning=225 --diag_wrap=off --display_error_number -z -m"DM3730_3.map" --heap_size=0x800 --stack_size=0x800 -i"/home/mod/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/lib" -i"/home/mod/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="DM3730_3_linkInfo.xml" --rom_model -o "DM3730_3.out" $(ORDERED_OBJS)
+	"/home/mod/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/bin/armcl" -mv7A8 --code_state=32 -me --define=dm3730 -g --diag_warning=225 --diag_wrap=off --display_error_number -z -m"BlinkLED.map" --heap_size=0x800 --stack_size=0x800 -i"/home/mod/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/lib" -i"/home/mod/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="BlinkLED_linkInfo.xml" --rom_model -o "BlinkLED.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-DM3730_3.hex: $(EXE_OUTPUTS)
+BlinkLED.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: ARM Hex Utility'
-	"/home/mod/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/bin/armhex"  -o "DM3730_3.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/mod/ti/ccsv7/tools/compiler/ti-cgt-arm_16.9.1.LTS/bin/armhex"  -o "BlinkLED.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "main.obj" 
-	-$(RM) "main.d" 
+	-$(RM) "src/main.obj" 
+	-$(RM) "src/main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
